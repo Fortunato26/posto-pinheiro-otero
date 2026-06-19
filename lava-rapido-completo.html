@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posto Pinheiro Otero - Lava Rapido Completo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg-primary:#dcdfe4;--bg-secondary:#f5f6f8;--bg-card:#ffffff;--bg-highlight:#eef0f3;
+            --green-primary:#1a7a3e;--green-light:#219653;--green-dark:#0f5c2a;--green-bg:rgba(33,150,83,0.08);
+            --red-primary:#b5302a;--red-light:#d63c35;--red-dark:#8a221d;--red-bg:rgba(214,60,53,0.08);
+            --yellow:#c9a40c;--yellow-bg:rgba(230,190,15,0.1);
+            --blue:#2980b9;--purple:#7c3aed;
+            --text-primary:#1a1a1a;--text-secondary:#4a4a4a;--text-muted:#6b6b6b;
+            --border-color:#c8ccd2;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md:0 4px 12px rgba(0,0,0,0.1);--shadow-lg:0 8px 24px rgba(0,0,0,0.12);
+        }
+        body{font-family:'DM Sans',sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh}
+        body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 0%,rgba(0,0,0,0.18) 100%);pointer-events:none;z-index:0}
+        .header{background:linear-gradient(135deg,#1d8348 0%,#145a32 50%,#1d8348 100%);border-bottom:4px solid var(--red-primary);padding:1.25rem 2rem;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);z-index:10}
+        .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(255,255,255,0.05) 30px,rgba(255,255,255,0.05) 31px)}
+        .header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+        .logo-section{display:flex;align-items:center;gap:1rem}
+        .logo-icon{width:50px;height:50px;background:linear-gradient(135deg,var(--red-primary) 0%,#a93226 100%);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:3px solid rgba(255,255,255,0.3);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+        .logo-text h1{font-family:'Barlow',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:3px;color:white;text-shadow:0 2px 4px rgba(0,0,0,0.2)}
+        .logo-text p{font-size:0.85rem;color:rgba(255,255,255,0.85);margin-top:0.2rem}
+        .subtitle-bar{background:var(--bg-secondary);padding:0.75rem 2rem;text-align:center;position:relative;z-index:10}
+        .subtitle-text{font-family:'Barlow',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text-secondary);letter-spacing:2px;text-transform:uppercase}
+        .nav-tabs{display:flex;gap:0.5rem;justify-content:center;margin:0 auto;padding:1rem 2rem;background:var(--bg-secondary);border-bottom:1px solid var(--border-color);position:relative;z-index:10}
+        .nav-tab{padding:0.75rem 1.5rem;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .3s;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-secondary);display:flex;align-items:center;gap:0.5rem}
+        .nav-tab:hover{border-color:var(--green-primary);color:var(--text-primary)}
+        .nav-tab.active{background:linear-gradient(135deg,var(--green-primary) 0%,var(--green-dark) 100%);color:white;border-color:transparent;box-shadow:0 4px 12px rgba(26,122,62,0.3)}
+        .nav-tab .tab-icon{font-size:1.1rem}
+        .container{max-width:1200px;margin:0 auto;padding:1.5rem 2rem 3rem;position:relative;z-index:10}
+        .page{display:none}.page.active{display:block}
+        .project-card{background:linear-gradient(135deg,#156d33 0%,#0d4a20 100%);border-radius:12px;padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.25rem;box-shadow:0 4px 16px rgba(21,109,51,0.3);border:1px solid rgba(255,255,255,0.15)}
+        .project-icon{width:50px;height:50px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+        .project-title{font-family:'Barlow',sans-serif;font-size:1.4rem;font-weight:800;color:white;letter-spacing:1px}
+        .project-subtitle{font-size:0.95rem;color:rgba(255,255,255,0.85);margin-top:0.25rem}
+        .budget-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;text-align:center;box-shadow:var(--shadow-sm)}
+        .budget-label{font-family:'Barlow',sans-serif;font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:2px;margin-bottom:0.5rem}
+        .budget-value{font-family:'Barlow',sans-serif;font-size:2.2rem;font-weight:800}
+        .budget-value.blue{color:var(--blue)}.budget-value.green{color:var(--green-primary)}.budget-value.purple{color:var(--purple)}
+        .budget-sub{font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem}
+        .equipment-section{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
+        .section-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color)}
+        .section-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+        .section-icon.blue{background:rgba(41,128,185,0.1)}.section-icon.orange{background:rgba(230,126,34,0.1)}.section-icon.purple{background:rgba(124,58,237,0.1)}.section-icon.green{background:rgba(26,122,62,0.1)}.section-icon.red{background:rgba(214,60,53,0.1)}.section-icon.yellow{background:rgba(201,164,12,0.1)}
+        .section-title{font-family:'Barlow',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:1px}
+        .section-total{margin-left:auto;font-family:'Barlow',sans-serif;font-size:1.1rem;font-weight:800;color:var(--green-primary)}
+        .equipment-list{display:flex;flex-direction:column;gap:0.6rem}
+        .equipment-item{display:flex;align-items:center;gap:1rem;padding:0.875rem 1rem;background:var(--bg-highlight);border-radius:8px;border-left:3px solid;transition:all .2s}
+        .equipment-item:hover{transform:translateX(4px)}
+        .equipment-item.confirmed{border-color:var(--green-primary)}
+        .equipment-item.optional{border-color:var(--yellow);opacity:0.8}
+        .item-status{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700}
+        .equipment-item.confirmed .item-status{background:var(--green-primary);color:white}
+        .equipment-item.optional .item-status{background:var(--yellow);color:white}
+        .item-details{flex:1}
+        .item-name{font-size:0.95rem;font-weight:600}
+        .item-specs{font-size:0.8rem;color:var(--text-secondary);margin-top:0.15rem}
+        .item-source{font-size:0.7rem;color:var(--text-muted);margin-top:0.15rem}
+        .item-price{font-family:'Barlow',sans-serif;font-size:0.95rem;font-weight:700;color:var(--green-primary);white-space:nowrap}
+        .equipment-item.optional .item-price{color:var(--yellow)}
+        .checklist-section{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
+        .checklist-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border-color)}
+        .checklist-progress-bar{height:8px;background:#b0b5bc;border-radius:4px;overflow:hidden;margin-top:0.75rem}
+        .checklist-progress-fill{height:100%;background:linear-gradient(90deg,#0d5c2a 0%,#1a7a3e 50%,#28a745 100%);border-radius:4px;transition:width .5s}
+        .checklist-group{background:var(--bg-highlight);border:1px solid var(--border-color);border-radius:10px;margin-bottom:0.75rem;overflow:hidden}
+        .group-header{display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;cursor:pointer;transition:background .2s}
+        .group-header:hover{background:#e4e7eb}
+        .group-number{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Barlow',sans-serif;font-size:0.9rem;font-weight:800;color:white}
+        .group-number.green{background:linear-gradient(135deg,var(--green-primary) 0%,var(--green-dark) 100%)}
+        .group-number.red{background:linear-gradient(135deg,var(--red-primary) 0%,var(--red-dark) 100%)}
+        .group-number.yellow{background:linear-gradient(135deg,var(--yellow) 0%,#a68a0a 100%)}
+        .group-info{flex:1}
+        .group-title{font-size:0.95rem;font-weight:700}
+        .group-subtitle{font-size:0.75rem;color:var(--text-muted);margin-top:0.15rem}
+        .group-progress{font-family:'Barlow',sans-serif;font-size:0.8rem;color:var(--text-secondary);padding:0.3rem 0.7rem;background:var(--bg-card);border-radius:5px;border:1px solid var(--border-color);font-weight:700}
+        .group-progress.done{color:#156d33;background:#e6f4ea;border-color:#81c784}
+        .group-toggle{font-size:0.8rem;color:var(--text-muted);transition:transform .3s}
+        .group-toggle.open{transform:rotate(180deg)}
+        .group-items{padding:0 1.25rem 1rem;display:none}
+        .checklist-item{display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--bg-card);border-radius:6px;margin-bottom:0.4rem;cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+        .checklist-item:hover{border-left-color:var(--green-primary);transform:translateX(3px)}
+        .checklist-item.completed{opacity:0.5;border-left-color:var(--green-light);background:var(--green-bg)}
+        .checklist-item.completed .item-text{text-decoration:line-through;color:var(--text-muted)}
+        .checkbox{width:22px;height:22px;border:2px solid #8a8a8a;border-radius:5px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;background:white}
+        .checklist-item.completed .checkbox{background:var(--green-primary);border-color:var(--green-primary)}
+        .checkbox::after{content:'\2713';font-size:0.8rem;color:white;opacity:0;font-weight:bold}
+        .checklist-item.completed .checkbox::after{opacity:1}
+        .item-content{flex:1}
+        .item-text{font-size:0.85rem;font-weight:600}
+        .item-note{font-size:0.75rem;color:var(--text-secondary);margin-top:0.1rem}
+        .item-tag{font-size:0.65rem;padding:0.2rem 0.5rem;border-radius:4px;font-weight:600;white-space:nowrap}
+        .item-tag.infra{background:#e6f4ea;color:#1a6b35;border:1px solid #b7dfc3}
+        .item-tag.equipment{background:#fdecea;color:#a82a23;border:1px solid #f5c6c2}
+        .item-tag.test{background:#fef9e7;color:#8a6d0b;border:1px solid #f5e6a3}
+        .item-tag.final{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7}
+        .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+        .summary-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;text-align:center;box-shadow:var(--shadow-sm)}
+        .summary-card .card-icon{font-size:2rem;margin-bottom:0.5rem}
+        .summary-card .card-title{font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem}
+        .summary-card .card-value{font-family:'Barlow',sans-serif;font-size:1.6rem;font-weight:800}
+        .info-box{background:rgba(26,122,62,0.08);border:1px solid rgba(26,122,62,0.2);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+        .info-box .info-icon{font-size:1.3rem}
+        .info-box .info-text{font-size:0.9rem;color:var(--text-secondary)}
+
+        .s{background:var(--bg-card);border-radius:16px;padding:1.5rem 2rem;margin-bottom:1.5rem;box-shadow:var(--shadow-md);border:1px solid var(--border-color)}
+        .st{font-family:'Barlow',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text-primary);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+        .st .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
+        table{width:100%;border-collapse:collapse;table-layout:fixed}
+        th{background:var(--bg-secondary);padding:0.7rem;text-align:left;font-weight:600;font-size:0.78rem;color:var(--text-muted);border-bottom:2px solid var(--border-color);font-family:'Barlow',sans-serif;letter-spacing:0.5px;text-transform:uppercase}
+        td{padding:0.6rem;border-bottom:1px solid #eee;font-size:0.85rem}
+        tr:hover td{background:var(--bg-secondary)}
+        .col-item{width:30%;text-align:left}
+        .col-peq{width:17%;text-align:right}
+        .col-suv{width:17%;text-align:right}
+        .col-cam{width:18%;text-align:right}
+        .col-time{width:18%;text-align:right}
+        .p{font-weight:700;color:var(--green-primary);text-align:right}
+        .c{font-weight:600;color:var(--red-primary);text-align:right}
+        .t{font-weight:700;color:var(--green-primary);font-size:1rem;text-align:right}
+        .h td{background:var(--green-bg);font-weight:600}
+        .vb{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;border-radius:25px;font-size:0.8rem;font-weight:700;color:#fff;font-family:'Barlow',sans-serif;letter-spacing:1px;text-transform:uppercase;box-shadow:0 3px 10px rgba(0,0,0,0.2)}
+        .badge-green{background:linear-gradient(135deg,var(--green-primary) 0%,var(--green-dark) 100%)}
+        .badge-blue{background:linear-gradient(135deg,var(--blue) 0%,#1a6da0 100%)}
+        .badge-purple{background:linear-gradient(135deg,var(--purple) 0%,#5b21b6 100%)}
+        .note{background:var(--yellow-bg);padding:0.8rem 1.2rem;border-radius:10px;font-size:0.8rem;color:#856404;margin-top:1rem;border-left:4px solid var(--yellow)}
+        .cg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+        .cc{border:2px solid var(--border-color);border-radius:12px;padding:1rem;text-align:center;transition:all .3s}
+        .cc:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+        .cc h3{font-size:0.85rem;margin-bottom:0.5rem;font-family:'Barlow',sans-serif}
+        .cc .big{font-size:1.5rem;font-weight:700;color:var(--green-primary);font-family:'Barlow',sans-serif}
+        .cc .sm{font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem}
+        .vs{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem}
+        .budget-card-green{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-primary) 100%);border-radius:16px;padding:1.5rem 2rem;color:#fff;text-align:center;margin-top:1rem;box-shadow:var(--shadow-lg)}
+        .budget-card-green .label{font-size:0.85rem;color:rgba(255,255,255,0.8);font-family:'Barlow',sans-serif;text-transform:uppercase;letter-spacing:1px}
+        .budget-card-green .value{font-size:2rem;font-weight:800;font-family:'Barlow',sans-serif;margin:0.4rem 0}
+        .budget-card-green .sub{font-size:0.75rem;color:rgba(255,255,255,0.7)}
+        .service-card{background:var(--bg-card);border:2px solid var(--border-color);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;transition:all .3s;box-shadow:var(--shadow-sm)}
+        .service-card:hover{border-color:var(--green-primary);box-shadow:var(--shadow-md)}
+        .service-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color)}
+        .service-name{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700}
+        .service-price{font-family:'Barlow',sans-serif;font-size:1.5rem;font-weight:800;color:var(--green-primary)}
+        .service-meta{display:flex;gap:1.5rem;margin-bottom:1rem;font-size:0.8rem;color:var(--text-muted)}
+        .service-meta span{display:flex;align-items:center;gap:0.3rem}
+        .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.8rem;margin-top:1rem}
+        .step{background:var(--bg-secondary);border-radius:10px;padding:0.8rem;border-left:3px solid var(--green-primary)}
+        .step-num{font-family:'Barlow',sans-serif;font-size:0.7rem;font-weight:700;color:var(--green-primary);text-transform:uppercase;letter-spacing:1px}
+        .step-text{font-size:0.8rem;margin-top:0.2rem}
+        .step-time{font-size:0.7rem;color:var(--text-muted);margin-top:0.2rem}
+        .highlight{background:var(--green-bg);border-left:4px solid var(--green-primary);padding:0.8rem 1.2rem;border-radius:0 10px 10px 0;margin-top:1rem;font-size:0.85rem}
+        @media(max-width:768px){.container{padding:0 1rem}.s,.equipment-section,.checklist-section{padding:1rem}th,td{padding:0.4rem;font-size:0.75rem}.cg,.vs,.summary-grid{grid-template-columns:1fr}.header-content{flex-direction:column;gap:0.75rem;text-align:center}.nav-tabs{flex-wrap:wrap}.steps{grid-template-columns:1fr}}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .animate{animation:fadeIn .4s ease forwards}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">&#9981;</div>
+                <div class="logo-text">
+                    <h1>PINHEIRO OTERO</h1>
+                    <p>Bom Jesus dos Perdões - SP</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="subtitle-bar">
+        <div class="subtitle-text">Projeto Lava Rapido</div>
+    </div>
+
+    <nav class="nav-tabs">
+        <div class="nav-tab active" onclick="showPage('lava-rapido')">
+            <span class="tab-icon">&#128703;</span>
+            <span>Equipamentos e Produtos</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('breakdown')">
+            <span class="tab-icon">&#128295;</span>
+            <span>Breakdown</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('projecao')">
+            <span class="tab-icon">&#128176;</span>
+            <span>Projecao CLT</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('checklist')">
+            <span class="tab-icon">&#10003;</span>
+            <span>Checklist</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('visao-geral')">
+            <span class="tab-icon">&#128202;</span>
+            <span>Visao Geral</span>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- ==================== LAVA RAPIDO ==================== -->
+        <div id="lava-rapido" class="page active">
+            <div class="project-card animate">
+                <div class="project-icon">&#128703;</div>
+                <div>
+                    <div class="project-title">Equipamentos e Produtos</div>
+                    <div class="project-subtitle">Lava Rapido - Posto Pinheiro Otero</div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon blue">&#128703;</div>
+                    <div class="section-title">EQUIPAMENTOS CONFIRMADOS</div>
+                    <div class="section-total">R$ 2.526,90</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Shampoozeira Eletronica Meka + Bomba D'Agua + Mangueiras</div><div class="item-specs">Bomba d'agua, mangueiras inclusas, sistema eletronico</div><div class="item-source">shopee.com.br</div></div><div class="item-price">R$ 679,00</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Lavadora de Alta Pressao Wap Profissional 4100</div><div class="item-specs">Alta pressao profissional, modelo 4100</div><div class="item-source">mercadolivre.com.br</div></div><div class="item-price">R$ 1.349,90</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Mangueira Wap 10m + Bico Engate Rapido</div><div class="item-specs">Mangueira alta pressao 10m, bico com engate rapido</div><div class="item-source">Cotacao confirmada</div></div><div class="item-price">R$ 219,00</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Bombona Tambor 200L</div><div class="item-specs">Reservatorio para shampoozeira, capacidade 200L</div><div class="item-source">Cotacao confirmada</div></div><div class="item-price">R$ 279,00</div></div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon purple">&#129524;</div>
+                    <div class="section-title">PRODUTOS ESSENCIAIS</div>
+                    <div class="section-total">R$ 1.149,97</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Detergente Desengraxante Xtreme Mol 5L - Protelim</div><div class="item-specs">Desengraxante profissional, 5 litros</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 105,70</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Prot Ativ 800 Desincrustante Acido 5L - Protelim</div><div class="item-specs">Acido profissional para caixa de rodas, 5 litros</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 112,00</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Bubble Foam Lava Autos Concentrado 1:400 5L - Jaca</div><div class="item-specs">Shampoo concentrado para lava rapido, diluicao 1:400</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 166,99</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Carnauba Express Ultra 1,5L - Vonixx</div><div class="item-specs">Cera liquida concentrada pos-lavagem, rende 75L</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 78,90</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Pretinho para Pneus Prot Pneu Blue 5L - Protelim</div><div class="item-specs">Pretinho para pneus - usado na Ducha com Cera</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 65,90</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Pincel Aplicador de Produto para Pneu - JS Imports</div><div class="item-specs">Pincel para aplicacao de pretinho</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 27,90</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Pulverizador Manual Berry 5L - Matabi</div><div class="item-specs">Pulverizador de costas para aplicacao de produtos</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 192,90</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Escova Furo de Roda Pequena - Detailer</div><div class="item-specs">Escova para limpeza de furos de rodas</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 37,90</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Escova Para Caixa de Roda Cabo Longo - Detailer</div><div class="item-specs">Escova de cabo longo para caixa de rodas</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 59,90</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Luva de Microfibra Chenille - Detailer</div><div class="item-specs">Luva para lavagem de carro</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 17,50</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Balde Preto com Logo Vermelho 19L - Detailer</div><div class="item-specs">Balde para lavagem, 19 litros</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 39,40</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Toalha Microfibra Secagem 90x60 600GSM - Kers</div><div class="item-specs">Toalha de secagem, 2 unidades</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 119,80</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Aplicador de Espuma Grande - Zacs</div><div class="item-specs">Aplicador de espuma, 5 unidades</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 14,50</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Kit 12 Flanelas Automotivas Microfibra 40x60 - Autoamerica</div><div class="item-specs">Kit com 12 flanelas de microfibra</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 161,88</div></div>
+                    <div class="equipment-item confirmed"><div class="item-status">&#10003;</div><div class="item-details"><div class="item-name">Pulverizador Brisa Leve 500ml - Guarany</div><div class="item-specs">Pulverizador manual para aplicacao de produtos</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 46,80</div></div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon orange">&#9208;</div>
+                    <div class="section-title">OPCIONAIS</div>
+                    <div class="section-total" style="color:var(--yellow)">R$ 6.718,08</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item optional"><div class="item-status">~</div><div class="item-details"><div class="item-name">Toldo para Lava Rapido</div><div class="item-specs">Estrutura de cobertura para area de lavagem</div><div class="item-source">Orcamento verbal - Pendente de confirmacao</div></div><div class="item-price">~R$ 6.000,00</div></div>
+                    <div class="equipment-item optional"><div class="item-status">~</div><div class="item-details"><div class="item-name">Aspirador de Po e Agua Wap GTW 1900W 20L</div><div class="item-specs">1900W, tanque 20L - opcional para internos</div><div class="item-source">shopee.com.br</div></div><div class="item-price">R$ 505,08</div></div>
+                    <div class="equipment-item optional"><div class="item-status">~</div><div class="item-details"><div class="item-name">Dark Box Finalizador de Caixa de Rodas 5L - Jaca</div><div class="item-specs">Finalizador de caixa de rodas - reservado para completa</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 71,00</div></div>
+                    <div class="equipment-item optional"><div class="item-status">~</div><div class="item-details"><div class="item-name">Power Pig Limpador Multiuso Alcalino 5L - Dub Boyz</div><div class="item-specs">Limpador multiuso - reservado para completa</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 82,10</div></div>
+                    <div class="equipment-item optional"><div class="item-status">~</div><div class="item-details"><div class="item-name">Vintex Limpa Vidros Espelho 500ml - Vonixx</div><div class="item-specs">Limpa vidros automotivo - reservado para completa</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 24,00</div></div>
+                    <div class="equipment-item optional"><div class="item-status">~</div><div class="item-details"><div class="item-name">Pulverizador Vertical Leve Export 370ml - Guarany</div><div class="item-specs">Pulverizador manual, 2 unidades - util mas nao essencial</div><div class="item-source">zapluscar.com.br</div></div><div class="item-price">R$ 35,00</div></div>
+                </div>
+            </div>
+
+        <div class="budget-card animate" style="margin-top:1.5rem">
+            <div class="budget-label">Investimento Confirmado - Lava Rapido</div>
+            <div class="budget-value blue">R$ 3.676,87</div>
+            <div class="budget-sub">4 equipamentos + 15 produtos essenciais (Duchas Simples e Cera)</div>
+        </div>
+    </div>
+
+    <!-- ==================== BREAKDOWN DOS SERVICOS ==================== -->
+        <div id="breakdown" class="page">
+            <div class="project-card animate">
+                <div class="project-icon">&#128295;</div>
+                <div>
+                    <div class="project-title">Breakdown dos Servicos</div>
+                    <div class="project-subtitle">Detalhamento por servico - Produtos, etapas e custos</div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-header">
+                    <div><div class="service-name">Ducha Simples</div><div class="service-meta"><span>&#9201; ~10 min</span><span>&#128167; Pre-lavagem + Enxague</span><span>&#127919; Rapido e eficiente</span></div></div>
+                    <div class="service-price">R$ 35 / 40 / 45</div>
+                </div>
+                <div class="note" style="margin-top:0;margin-bottom:1rem"><strong>Produtos usados:</strong> Desengraxante (pre-lavagem) + Acido (caixa de rodas) + Shampoo</div>
+                <table><thead><tr><th class="col-item">Produto / Etapa</th><th style="width:15%;text-align:center">Quantidade</th><th class="col-peq">Pequeno</th><th class="col-suv">SUV</th><th class="col-cam">Caminhonete</th></tr></thead><tbody>
+                    <tr><td class="col-item">Desengraxante (pre-lavagem)</td><td style="text-align:center">~30 ml</td><td class="c col-peq">R$ 0,08</td><td class="c col-suv">R$ 0,11</td><td class="c col-cam">R$ 0,13</td></tr>
+                    <tr><td class="col-item">Acido caixa de rodas</td><td style="text-align:center">~20 ml</td><td class="c col-peq">R$ 0,18</td><td class="c col-suv">R$ 0,22</td><td class="c col-cam">R$ 0,27</td></tr>
+                    <tr><td class="col-item">Shampoo</td><td style="text-align:center">~15 ml</td><td class="c col-peq">R$ 0,01</td><td class="c col-suv">R$ 0,01</td><td class="c col-cam">R$ 0,01</td></tr>
+                    <tr class="h"><td class="col-item"><strong>CUSTO TOTAL</strong></td><td style="text-align:center"><strong>~65 ml</strong></td><td class="c col-peq"><strong>R$ 0,27</strong></td><td class="c col-suv"><strong>R$ 0,34</strong></td><td class="c col-cam"><strong>R$ 0,41</strong></td></tr>
+                </tbody></table>
+                <div class="steps">
+                    <div class="step"><div class="step-num">1. Pre-lavagem</div><div class="step-text">Aplicar desengraxante nas rodas, para-choques e sujeira pesada</div></div>
+                    <div class="step"><div class="step-num">2. Acido rodas</div><div class="step-text">Aplicar acido na caixa de rodas, esfregar, enxaguar</div></div>
+                    <div class="step"><div class="step-num">3. Shampoo</div><div class="step-text">Aplicar shampoo com espuma, esfregar com luva/pano, enxaguar</div></div>
+                    <div class="step"><div class="step-num">4. Finalizacao</div><div class="step-text">Enxague final, secar com panos limpos</div></div>
+                </div>
+            </div>
+
+            <div class="service-card" style="border-color:var(--green-primary)">
+                <div class="service-header">
+                    <div><div class="service-name" style="color:var(--green-primary)">Ducha com Cera</div><div class="service-meta"><span>&#9201; ~20 min</span><span>&#10024; Pre-lavagem + Cera + Pretinho</span><span>&#127919; Premium</span></div></div>
+                    <div class="service-price" style="color:var(--green-primary)">R$ 55 / 60 / 70</div>
+                </div>
+                <div class="note" style="margin-top:0;margin-bottom:1rem"><strong>Produtos usados:</strong> Desengraxante (pre-lavagem) + Acido (caixa de rodas) + Shampoo + Cera + Pretinho</div>
+                <table><thead><tr><th class="col-item">Produto / Etapa</th><th style="width:15%;text-align:center">Quantidade</th><th class="col-peq">Pequeno</th><th class="col-suv">SUV</th><th class="col-cam">Caminhonete</th></tr></thead><tbody>
+                    <tr><td class="col-item">Desengraxante (pre-lavagem)</td><td style="text-align:center">~30 ml</td><td class="c col-peq">R$ 0,08</td><td class="c col-suv">R$ 0,11</td><td class="c col-cam">R$ 0,13</td></tr>
+                    <tr><td class="col-item">Acido caixa de rodas</td><td style="text-align:center">~20 ml</td><td class="c col-peq">R$ 0,18</td><td class="c col-suv">R$ 0,22</td><td class="c col-cam">R$ 0,27</td></tr>
+                    <tr><td class="col-item">Shampoo</td><td style="text-align:center">~15 ml</td><td class="c col-peq">R$ 0,01</td><td class="c col-suv">R$ 0,01</td><td class="c col-cam">R$ 0,01</td></tr>
+                    <tr><td class="col-item">Cera (Vonixx Carnauba)</td><td style="text-align:center">~10 ml</td><td class="c col-peq">R$ 0,02</td><td class="c col-suv">R$ 0,03</td><td class="c col-cam">R$ 0,03</td></tr>
+                    <tr><td class="col-item">Pretinho (pneus)</td><td style="text-align:center">~10 ml</td><td class="c col-peq">R$ 0,01</td><td class="c col-suv">R$ 0,01</td><td class="c col-cam">R$ 0,01</td></tr>
+                    <tr class="h"><td class="col-item"><strong>CUSTO TOTAL</strong></td><td style="text-align:center"><strong>~85 ml</strong></td><td class="c col-peq"><strong>R$ 0,30</strong></td><td class="c col-suv"><strong>R$ 0,38</strong></td><td class="c col-cam"><strong>R$ 0,45</strong></td></tr>
+                </tbody></table>
+                <div class="steps">
+                    <div class="step" style="border-left-color:var(--green-primary)"><div class="step-num" style="color:var(--green-primary)">1. Pre-lavagem</div><div class="step-text">Aplicar desengraxante nas rodas, para-choques e sujeira pesada</div></div>
+                    <div class="step" style="border-left-color:var(--green-primary)"><div class="step-num" style="color:var(--green-primary)">2. Acido rodas</div><div class="step-text">Aplicar acido na caixa de rodas, esfregar, enxaguar</div></div>
+                    <div class="step" style="border-left-color:var(--green-primary)"><div class="step-num" style="color:var(--green-primary)">3. Shampoo</div><div class="step-text">Aplicar shampoo com espuma, esfregar com luva/pano, enxaguar</div></div>
+                    <div class="step" style="border-left-color:var(--green-primary)"><div class="step-num" style="color:var(--green-primary)">4. Cera + Secagem</div><div class="step-text">Aplicar cera Vonixx no carro molhado, secar com microfibra</div></div>
+                    <div class="step" style="border-left-color:var(--green-primary)"><div class="step-num" style="color:var(--green-primary)">5. Pretinho</div><div class="step-text">Aplicar pretinho nos pneus com pincel</div></div>
+                </div>
+            </div>
+
+            <div class="s">
+                <div class="st"><div class="icon icon-green">$</div> Comparativo de Margem</div>
+                <table><thead><tr><th class="col-item">Servico</th><th class="col-peq">Pequeno</th><th class="col-suv">SUV</th><th class="col-cam">Caminhonete</th><th class="col-time">Lucro/Carro</th></tr></thead><tbody>
+                    <tr><td class="col-item"><strong>Ducha Simples</strong></td><td class="p col-peq">R$ 34,73</td><td class="p col-suv">R$ 39,66</td><td class="p col-cam">R$ 44,59</td><td class="col-time" style="font-weight:700;color:var(--green-primary)">~99%</td></tr>
+                    <tr><td class="col-item"><strong>Ducha com Cera</strong></td><td class="p col-peq">R$ 54,70</td><td class="p col-suv">R$ 59,62</td><td class="p col-cam">R$ 69,55</td><td class="col-time" style="font-weight:700;color:var(--green-primary)">~99%</td></tr>
+                </tbody></table>
+                <div class="note"><strong>Por que margem tao alta?</strong> Custos variaveis de produtos sao minusculos (R$0,27-0,45/carro). O custo real e a mao de obra (fixa). Cada carro que entra e quase lucro puro.</div>
+            </div>
+
+            <div class="s">
+                <div class="st"><div class="icon icon-red">!</div> Regra de Uso dos Produtos</div>
+                <table><thead><tr><th style="width:30%">Produto</th><th style="width:25%">Ducha Simples</th><th style="width:25%">Ducha com Cera</th><th style="width:20%">Observacao</th></tr></thead><tbody>
+                    <tr><td><strong>Desengraxante</strong></td><td>&#9989; Sempre</td><td>&#9989; Sempre</td><td>Pre-lavagem obrigatoria</td></tr>
+                    <tr><td><strong>Acido</strong></td><td>&#9989; Sempre</td><td>&#9989; Sempre</td><td>Caixa de rodas apenas</td></tr>
+                    <tr><td><strong>Shampoo</strong></td><td>&#9989; Sempre</td><td>&#9989; Sempre</td><td>Lavagem principal</td></tr>
+                    <tr><td><strong>Cera</strong></td><td>&#10060; Nao</td><td>&#9989; Sim</td><td>Vonixx Carnauba Express</td></tr>
+                    <tr><td><strong>Pretinho</strong></td><td>&#10060; Nao</td><td>&#9989; Sim</td><td>Prot Pneu Blue - pneus</td></tr>
+                </tbody></table>
+            </div>
+        </div>
+
+        <!-- ==================== PROJECAO CLT ==================== -->
+        <div id="projecao" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#7c3aed 0%,#5b21b6 100%);box-shadow:0 4px 16px rgba(124,58,237,0.3)">
+                <div class="project-icon">&#128176;</div>
+                <div>
+                    <div class="project-title">Projecao CLT</div>
+                    <div class="project-subtitle">CLT Fixo vs CLT + R$5/carro - 15 a 20 carros/dia</div>
+                </div>
+            </div>
+
+            <div class="s">
+                <div class="st"><div class="icon icon-green">$</div> Premissas</div>
+                <div class="cg">
+                    <div class="cc" style="border-color:var(--blue)"><h3>Horario</h3><div class="big" style="color:var(--blue)">09h-18h</div><div class="sm">8h efetivas (1h pausa)</div></div>
+                    <div class="cc" style="border-color:var(--purple)"><h3>Dias/mes</h3><div class="big" style="color:var(--purple)">26</div><div class="sm">Segunda a Sabado</div></div>
+                    <div class="cc" style="border-color:var(--green-primary)"><h3>Ticket Medio</h3><div class="big">R$ 48</div><div class="sm">50% simples + 50% cera</div></div>
+                </div>
+            </div>
+
+            <div class="s">
+                <div class="st"><div class="icon icon-purple">~</div> Comparativo: CLT Fixo vs CLT + R$5/carro</div>
+                <div class="vs">
+                    <div>
+                        <div style="text-align:center;margin-bottom:0.8rem"><span class="vb badge-green">Modelo A: CLT Fixo</span></div>
+                        <table><thead><tr><th style="width:50%">Item</th><th style="text-align:right;width:25%">15 carros</th><th style="text-align:right;width:25%">20 carros</th></tr></thead><tbody>
+                            <tr><td>Receita/dia</td><td class="t" style="text-align:right">R$ 720</td><td class="t" style="text-align:right">R$ 960</td></tr>
+                            <tr><td>Receita/mes</td><td class="t" style="text-align:right">R$ 18.720</td><td class="t" style="text-align:right">R$ 24.960</td></tr>
+                            <tr><td>Mao de obra</td><td class="c" style="text-align:right">R$ 3.363</td><td class="c" style="text-align:right">R$ 3.363</td></tr>
+                            <tr><td>Produtos (R$0,33/carro)</td><td class="c" style="text-align:right">R$ 128</td><td class="c" style="text-align:right">R$ 172</td></tr>
+                            <tr class="h"><td><strong>Custo Total</strong></td><td class="c" style="text-align:right"><strong>R$ 3.491</strong></td><td class="c" style="text-align:right"><strong>R$ 3.535</strong></td></tr>
+                            <tr class="h"><td><strong>Lucro Liquido</strong></td><td class="p" style="text-align:right"><strong>R$ 15.229</strong></td><td class="p" style="text-align:right"><strong>R$ 21.425</strong></td></tr>
+                            <tr><td>Margem</td><td style="text-align:right;font-weight:700">81%</td><td style="text-align:right;font-weight:700">86%</td></tr>
+                        </tbody></table>
+                    </div>
+                    <div>
+                        <div style="text-align:center;margin-bottom:0.8rem"><span class="vb badge-blue">Modelo B: CLT + R$5/carro</span></div>
+                        <table><thead><tr><th style="width:50%">Item</th><th style="text-align:right;width:25%">15 carros</th><th style="text-align:right;width:25%">20 carros</th></tr></thead><tbody>
+                            <tr><td>Receita/dia</td><td class="t" style="text-align:right">R$ 720</td><td class="t" style="text-align:right">R$ 960</td></tr>
+                            <tr><td>Receita/mes</td><td class="t" style="text-align:right">R$ 18.720</td><td class="t" style="text-align:right">R$ 24.960</td></tr>
+                            <tr><td>Mao de obra fixa</td><td class="c" style="text-align:right">R$ 3.363</td><td class="c" style="text-align:right">R$ 3.363</td></tr>
+                            <tr><td>Bonus (R$5/carro)</td><td class="c" style="text-align:right">R$ 1.950</td><td class="c" style="text-align:right">R$ 2.600</td></tr>
+                            <tr><td>Produtos (R$0,33/carro)</td><td class="c" style="text-align:right">R$ 128</td><td class="c" style="text-align:right">R$ 172</td></tr>
+                            <tr class="h"><td><strong>Custo Total</strong></td><td class="c" style="text-align:right"><strong>R$ 5.441</strong></td><td class="c" style="text-align:right"><strong>R$ 6.135</strong></td></tr>
+                            <tr class="h"><td><strong>Lucro Liquido</strong></td><td class="p" style="text-align:right"><strong>R$ 13.279</strong></td><td class="p" style="text-align:right"><strong>R$ 18.825</strong></td></tr>
+                            <tr><td>Margem</td><td style="text-align:right;font-weight:700">71%</td><td style="text-align:right;font-weight:700">75%</td></tr>
+                        </tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s">
+                <div class="st"><div class="icon icon-red">!</div> O que o Funcionario Recebe</div>
+                <table><thead><tr><th style="width:35%">Modelo</th><th style="text-align:right;width:22%">15 carros/dia</th><th style="text-align:right;width:22%">20 carros/dia</th><th style="text-align:right;width:21%">Extra mensal</th></tr></thead><tbody>
+                    <tr><td><strong>CLT Fixo</strong></td><td style="text-align:right">R$ 1.900</td><td style="text-align:right">R$ 1.900</td><td style="text-align:right;color:var(--text-muted)">-</td></tr>
+                    <tr><td><strong>CLT + R$5/carro</strong></td><td style="text-align:right">R$ 1.900 + R$ 1.950</td><td style="text-align:right">R$ 1.900 + R$ 2.600</td><td style="text-align:right;font-weight:700;color:var(--green-primary)">+R$ 1.950 a R$ 2.600</td></tr>
+                    <tr class="h"><td><strong>Total na mao</strong></td><td style="text-align:right"><strong>R$ 3.850</strong></td><td style="text-align:right"><strong>R$ 4.500</strong></td><td style="text-align:right;font-weight:700;color:var(--green-primary)"><strong>+R$ 1.950 a R$ 2.600</strong></td></tr>
+                </tbody></table>
+                <div class="note"><strong>Observacao:</strong> Salario base CLT: R$ 1.900. Bonus de R$5/carro e adicional por produtividade. Custo total para o posto (com encargos): R$ 3.363 fixo + bonus.</div>
+            </div>
+
+            <div class="s">
+                <div class="st"><div class="icon icon-blue">%</div> Impacto no Lucro do Posto</div>
+                <div class="cg">
+                    <div class="cc" style="border-color:var(--green-primary)"><h3>15 carros/dia</h3><div class="big">R$ 1.950</div><div class="sm">diferenca entre modelos</div></div>
+                    <div class="cc" style="border-color:var(--blue)"><h3>20 carros/dia</h3><div class="big" style="color:var(--blue)">R$ 2.600</div><div class="sm">diferenca entre modelos</div></div>
+                    <div class="cc" style="border-color:var(--purple)"><h3>Custo extra/mes</h3><div class="big" style="color:var(--purple)">10-11%</div><div class="sm">da receita (15-20 carros)</div></div>
+                </div>
+            </div>
+
+            <div class="s">
+                <div class="st"><div class="icon icon-green">#</div> Projecao Mensal (26 dias uteis)</div>
+                <table><thead><tr><th style="width:30%">Cenario</th><th style="text-align:right;width:14%">Receita</th><th style="text-align:right;width:14%">Custo A (fixo)</th><th style="text-align:right;width:14%">Custo B (+bonus)</th><th style="text-align:right;width:14%">Lucro A</th><th style="text-align:right;width:14%">Lucro B</th></tr></thead><tbody>
+                    <tr style="background:var(--red-bg)"><td>&#9888; Pessimista (10 carros)</td><td class="t" style="text-align:right">R$ 12.480</td><td class="c" style="text-align:right">R$ 3.447</td><td class="c" style="text-align:right">R$ 4.747</td><td class="p" style="text-align:right">R$ 9.033</td><td class="p" style="text-align:right">R$ 7.733</td></tr>
+                    <tr><td>15 carros/dia</td><td class="t" style="text-align:right">R$ 18.720</td><td class="c" style="text-align:right">R$ 3.491</td><td class="c" style="text-align:right">R$ 5.441</td><td class="p" style="text-align:right">R$ 15.229</td><td class="p" style="text-align:right">R$ 13.279</td></tr>
+                    <tr><td>17 carros/dia</td><td class="t" style="text-align:right">R$ 21.168</td><td class="c" style="text-align:right">R$ 3.513</td><td class="c" style="text-align:right">R$ 5.742</td><td class="p" style="text-align:right">R$ 17.655</td><td class="p" style="text-align:right">R$ 15.426</td></tr>
+                    <tr><td>20 carros/dia</td><td class="t" style="text-align:right">R$ 24.960</td><td class="c" style="text-align:right">R$ 3.535</td><td class="c" style="text-align:right">R$ 6.135</td><td class="p" style="text-align:right">R$ 21.425</td><td class="p" style="text-align:right">R$ 18.825</td></tr>
+                </tbody></table>
+                <div class="note"><strong>Nota:</strong> Custos fixos (agua, luz, aluguel, alvara) sao cobertos pelo Posto de Combustivel. Custos do lava rapido sao apenas mao de obra (CLT) e produtos variaveis. Cenario pessimista assume 10 carros/dia (50% da meta). Investimento inicial: R$ 3.676,87.</div>
+            </div>
+
+            <div class="s" style="border:2px solid var(--green-primary)">
+                <div class="st"><div class="icon icon-green">*</div> Recomendacao</div>
+                <div class="highlight">
+                    <strong>Modelo B (CLT + R$5/carro) e melhor.</strong> Custo extra de R$1.950-R$2.600/mes (10-11% da receita) se paga em:<br><br>
+                    <strong>1. Retencao:</strong> Funcionario motivado nao sai (custo de treinar novo e ~R$1.500-2.000)<br>
+                    <strong>2. Produtividade:</strong> Bonus incentiva ritmo - meta 15-20 carros/dia sustentavel<br>
+                    <strong>3. Qualidade:</strong> Funcionario que ganha mais se importa com resultado<br><br>
+                    <strong>Cenario pessimista (10 carros/dia):</strong> Mesmo no pior caso, o lava rapido gera R$ 7.733-9.033 de lucro mensal. O negocio e viavel mesmo com demanda abaixo da meta.<br><br>
+                    <strong>Investimento inicial:</strong> R$ 3.676,87 (payback em ~25 dias)<br>
+                    <strong>Lucro do posto:</strong> R$ 7.733 (10 carros) a R$ 18.825 (20 carros) - margem saudavel de 62-75%
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CHECKLIST ==================== -->
+        <div id="checklist" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#1a7a3e 0%,#0f5c2a 100%);box-shadow:0 4px 16px rgba(26,122,62,0.3)">
+                <div class="project-icon">&#10003;</div>
+                <div>
+                    <div class="project-title">Checklist de Implantacao</div>
+                    <div class="project-subtitle">31 tarefas em 6 grupos - Acompanhamento do progresso</div>
+                </div>
+            </div>
+
+            <div class="checklist-section animate">
+                <div class="checklist-header">
+                    <div class="section-icon green">&#10003;</div>
+                    <div class="section-title">CHECKLIST DE IMPLANTACAO</div>
+                    <div class="section-total" id="progress-count">0/31</div>
+                </div>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="progress-fill" style="width:0%"></div></div>
+                <div style="margin-top:1rem">
+                    <!-- Grupo 1 -->
+                    <div class="checklist-group"><div class="group-header" onclick="toggleGroup(this)"><div class="group-number green">1</div><div class="group-info"><div class="group-title">Preparacao do Espaco</div><div class="group-subtitle">Infraestrutura basica para o lava rapido</div></div><div class="group-progress" data-group="1">0/6</div><div class="group-toggle">&#9660;</div></div><div class="group-items" data-group="1">
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Definir layout final do lava rapido</div><div class="item-note">Posicao dos boxes, entrada e saida de veiculos</div></div><span class="item-tag infra">Inicio</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Verificar/instalar ponto de agua</div><div class="item-note">Conexao para abastecimento da shampoozeira e lavadora</div></div><span class="item-tag infra">Agua</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Verificar/instalar ponto de energia 220V</div><div class="item-note">Para shampoozeira e lavadora</div></div><span class="item-tag infra">Energia</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Instalar caixa d'agua (se necessario)</div><div class="item-note">Reservatorio para suprir lava rapido</div></div><span class="item-tag infra">Agua</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Implementar sistema de drenagem</div><div class="item-note">Canaletas e caixa separadora de agua/oleo</div></div><span class="item-tag infra">Drenagem</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Preparar piso com declive</div><div class="item-note">Inclinacao para escoamento da agua</div></div><span class="item-tag infra">Piso</span></div>
+                    </div></div>
+                    <!-- Grupo 2 -->
+                    <div class="checklist-group"><div class="group-header" onclick="toggleGroup(this)"><div class="group-number red">2</div><div class="group-info"><div class="group-title">Recebimento de Equipamentos</div><div class="group-subtitle">Conferencia e validacao dos itens comprados</div></div><div class="group-progress" data-group="2">0/7</div><div class="group-toggle">&#9660;</div></div><div class="group-items" data-group="2">
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Receber e conferir Shampoozeira Meka</div><div class="item-note">R$ 679,00 - Verificar bomba, mangueiras, eletronica</div></div><span class="item-tag equipment">R$ 679</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Receber e conferir Lavadora Wap 4100</div><div class="item-note">R$ 1.349,90 - Verificar motor, pistola, mangueira</div></div><span class="item-tag equipment">R$ 1.349</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Receber e conferir Mangueira Wap 10m + Bico</div><div class="item-note">R$ 219,00 - Verificar engate rapido e pressao</div></div><span class="item-tag equipment">R$ 219</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Receber e conferir Bombona 200L</div><div class="item-note">R$ 279,00 - Verificar vedacao e resistencia</div></div><span class="item-tag equipment">R$ 279</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Receber e conferir Produtos Essenciais (16 itens)</div><div class="item-note">R$ 1.183,17 - Desengraxante, acido, shampoo, cera, pretinho, separador, pincel, pulverizadores, escovas, luva, balde, toalhas, aplicadores, flanelas</div></div><span class="item-tag equipment">R$ 1.183</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Verificar garantias e notas fiscais</div><div class="item-note">Organizar documentos de todos os equipamentos</div></div><span class="item-tag infra">Doc</span></div>
+                    </div></div>
+                    <!-- Grupo 3 -->
+                    <div class="checklist-group"><div class="group-header" onclick="toggleGroup(this)"><div class="group-number green">3</div><div class="group-info"><div class="group-title">Instalacao e Montagem</div><div class="group-subtitle">Instalar todos os equipamentos no local</div></div><div class="group-progress" data-group="3">0/5</div><div class="group-toggle">&#9660;</div></div><div class="group-items" data-group="3">
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Instalar Bombona 200L e conectar a shampoozeira</div><div class="item-note">Posicionar bombona, conectar mangueiras</div></div><span class="item-tag infra">Montagem</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Instalar Shampoozeira Meka na parede/estrutura</div><div class="item-note">Fixar central de comando, conectar mangueira</div></div><span class="item-tag infra">Montagem</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Instalar Lavadora de Alta Pressao Wap 4100</div><div class="item-note">Posicionar no local, conectar agua e energia</div></div><span class="item-tag infra">Montagem</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Conectar Mangueira 10m + Bico na lavadora</div><div class="item-note">Verificar vedacao e engate rapido</div></div><span class="item-tag infra">Montagem</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Instalar sinalizacao e faixas de seguranca</div><div class="item-note">Placas de advertencia, faixas no piso</div></div><span class="item-tag infra">Seguranca</span></div>
+                    </div></div>
+                    <!-- Grupo 4 -->
+                    <div class="checklist-group"><div class="group-header" onclick="toggleGroup(this)"><div class="group-number yellow">4</div><div class="group-info"><div class="group-title">Testes e Validacao</div><div class="group-subtitle">Garantir que tudo funciona corretamente</div></div><div class="group-progress" data-group="4">0/4</div><div class="group-toggle">&#9660;</div></div><div class="group-items" data-group="4">
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Testar Shampoozeira - gerar espuma</div><div class="item-note">Verificar bomba, pressao, concentracao do produto</div></div><span class="item-tag test">Teste</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Testar Lavadora de Alta Pressao</div><div class="item-note">Verificar pressao, vazao, vazamentos</div></div><span class="item-tag test">Teste</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Testar drenagem e escoamento da agua</div><div class="item-note">Verificar se agua escoa corretamente</div></div><span class="item-tag test">Teste</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Lavagem teste em veiculo</div><div class="item-note">Simular atendimento real, cronometrar tempo</div></div><span class="item-tag final">Final</span></div>
+                    </div></div>
+                    <!-- Grupo 5 -->
+                    <div class="checklist-group"><div class="group-header" onclick="toggleGroup(this)"><div class="group-number red">5</div><div class="group-info"><div class="group-title">Preparacao para Operacao</div><div class="group-subtitle">Organizacao, precos e equipe</div></div><div class="group-progress" data-group="5">0/5</div><div class="group-toggle">&#9660;</div></div><div class="group-items" data-group="5">
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Definir tabela de precos do lava rapido</div><div class="item-note">Ducha simples e ducha com cera</div></div><span class="item-tag infra">Preco</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Treinar equipe de atendimento</div><div class="item-note">Procedimentos, uso dos equipamentos, atendimento</div></div><span class="item-tag infra">Equipe</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Definir horarios e escalas de trabalho</div><div class="item-note">09h-18h, Seg-Sab, pausas estrategicas</div></div><span class="item-tag infra">Escala</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Criar estoque minimo de produtos</div><div class="item-note">Desengraxante, acido, shampoo, cera para 30 dias</div></div><span class="item-tag infra">Estoque</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Definir fluxo de atendimento</div><div class="item-note">Recepcao - Lavagem - Pagamento - Liberacao</div></div><span class="item-tag infra">Processo</span></div>
+                    </div></div>
+                    <!-- Grupo 6 -->
+                    <div class="checklist-group"><div class="group-header" onclick="toggleGroup(this)"><div class="group-number green">6</div><div class="group-info"><div class="group-title">Lancamento e Marketing</div><div class="group-subtitle">Abertura e divulgacao do lava rapido</div></div><div class="group-progress" data-group="6">0/5</div><div class="group-toggle">&#9660;</div></div><div class="group-items" data-group="6">
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Criar/otimizar Google Meu Negocio</div><div class="item-note">Adicionar servico lava rapido, fotos, horarios</div></div><span class="item-tag final">Digital</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Publicar nas redes sociais</div><div class="item-note">Instagram, Facebook - fotos antes/depois</div></div><span class="item-tag final">Marketing</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Criar promocao de lancamento</div><div class="item-note">Desconto nos primeiros 30 dias</div></div><span class="item-tag final">Promocao</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Iniciar operacao oficial</div><div class="item-note">Abrir para clientes reais</div></div><span class="item-tag final">Go Live</span></div>
+                        <div class="checklist-item" onclick="toggleCheck(this)"><div class="checkbox"></div><div class="item-content"><div class="item-text">Coletar feedback dos primeiros clientes</div><div class="item-note">Ajustar precos, processo, atendimento</div></div><span class="item-tag final">Feedback</span></div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div class="budget-card animate" style="margin-top:1.5rem">
+                <div class="budget-label">Investimento Confirmado - Lava Rapido</div>
+                <div class="budget-value blue">R$ 3.676,87</div>
+                <div class="budget-sub">4 equipamentos + 15 produtos essenciais (Duchas Simples e Cera)</div>
+            </div>
+        </div>
+
+        <!-- ==================== VISAO GERAL ==================== -->
+        <div id="visao-geral" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#2c3e50 0%,#1a252f 100%);box-shadow:0 4px 16px rgba(44,62,80,0.3)">
+                <div class="project-icon">&#128202;</div>
+                <div>
+                    <div class="project-title">Visao Geral do Projeto</div>
+                    <div class="project-subtitle">Posto Pinheiro Otero - Lava Rapido</div>
+                </div>
+            </div>
+
+            <div class="budget-card animate">
+                <div class="budget-label">Investimento Confirmado</div>
+                <div class="budget-value green">R$ 3.676,87</div>
+                <div class="budget-sub">4 equipamentos + 15 produtos essenciais (Duchas Simples e Cera)</div>
+            </div>
+
+            <div class="summary-grid animate">
+                <div class="summary-card"><div class="card-icon">&#128176;</div><div class="card-title">Custo Fixo Mensal</div><div class="card-value" style="color:var(--red-primary)">R$ 3.363</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">CLT 1 funcionario (posto cobre agua/luz/aluguel)</div></div>
+                <div class="summary-card"><div class="card-icon">&#128200;</div><div class="card-title">Lucro Mensal (15 carros)</div><div class="card-value" style="color:var(--green-primary)">R$ 13.279</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">Modelo CLT + bonus, margem 71%</div></div>
+                <div class="summary-card"><div class="card-icon">&#9201;</div><div class="card-title">Payback</div><div class="card-value" style="color:var(--blue)">~25 dias</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">R$ 3.677 / R$ 150 dia (lucro medio)</div></div>
+            </div>
+
+            <div class="summary-grid animate">
+                <div class="summary-card" style="border-color:var(--red-primary)"><div class="card-icon">&#9888;</div><div class="card-title">Cenario Pessimista</div><div class="card-value" style="color:var(--red-primary)">R$ 7.733</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">10 carros/dia, modelo CLT + bonus</div></div>
+                <div class="summary-card"><div class="card-icon">&#128703;</div><div class="card-title">Investimento Inicial</div><div class="card-value" style="color:var(--blue)">R$ 3.676,87</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">Payback em ~25 dias</div></div>
+                <div class="summary-card"><div class="card-icon">&#127919;</div><div class="card-title">Meta Diaria</div><div class="card-value" style="color:var(--green-primary)">15-20</div><div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">carros/dia sustentaveis</div></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showPage(pageId){
+            document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+            document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});
+            document.getElementById(pageId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        function toggleGroup(header){
+            var items=header.nextElementSibling;
+            var toggle=header.querySelector('.group-toggle');
+            var isOpen=items.style.display!=='none';
+            items.style.display=isOpen?'none':'block';
+            toggle.classList.toggle('open',!isOpen);
+        }
+        function toggleCheck(item){
+            item.classList.toggle('completed');
+            updateProgress();
+            saveProgress();
+        }
+        function updateProgress(){
+            var allItems=document.querySelectorAll('.checklist-item');
+            var completedItems=document.querySelectorAll('.checklist-item.completed');
+            var total=allItems.length;
+            var completed=completedItems.length;
+            var percentage=Math.round((completed/total)*100);
+            document.getElementById('progress-count').textContent=completed+'/'+total;
+            document.getElementById('progress-fill').style.width=percentage+'%';
+            [1,2,3,4,5,6].forEach(function(groupNum){
+                var groupItems=document.querySelectorAll('.group-items[data-group="'+groupNum+'"] .checklist-item');
+                var groupCompleted=document.querySelectorAll('.group-items[data-group="'+groupNum+'"] .checklist-item.completed');
+                var progressEl=document.querySelector('.group-progress[data-group="'+groupNum+'"]');
+                if(progressEl){
+                    progressEl.textContent=groupCompleted.length+'/'+groupItems.length;
+                    progressEl.classList.toggle('done',groupCompleted.length===groupItems.length);
+                }
+            });
+        }
+        function saveProgress(){
+            var items=document.querySelectorAll('.checklist-item');
+            var progress=Array.from(items).map(function(item){return item.classList.contains('completed')});
+            localStorage.setItem('lava-rapido-checklist',JSON.stringify(progress));
+        }
+        function loadProgress(){
+            var saved=localStorage.getItem('lava-rapido-checklist');
+            if(saved){
+                var progress=JSON.parse(saved);
+                var items=document.querySelectorAll('.checklist-item');
+                items.forEach(function(item,index){if(progress[index])item.classList.add('completed')});
+                updateProgress();
+            }
+        }
+        document.addEventListener('DOMContentLoaded',loadProgress);
+    </script>
+</body>
+</html>
