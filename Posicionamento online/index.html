@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posto Pinheiro Otero - Posicionamento Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg-primary:#dcdfe4;--bg-secondary:#f5f6f8;--bg-card:#ffffff;--bg-highlight:#eef0f3;
+            --green-primary:#1a7a3e;--green-light:#219653;--green-dark:#0f5c2a;--green-bg:rgba(33,150,83,0.08);
+            --red-primary:#b5302a;--red-light:#d63c35;--red-dark:#8a221d;--red-bg:rgba(214,60,53,0.08);
+            --yellow:#c9a40c;--yellow-bg:rgba(230,190,15,0.1);
+            --blue:#2980b9;--purple:#7c3aed;
+            --text-primary:#1a1a1a;--text-secondary:#4a4a4a;--text-muted:#6b6b6b;
+            --border-color:#c8ccd2;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md:0 4px 12px rgba(0,0,0,0.1);--shadow-lg:0 8px 24px rgba(0,0,0,0.12);
+        }
+        body{font-family:'DM Sans',sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh}
+        body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 0%,rgba(0,0,0,0.18) 100%);pointer-events:none;z-index:0}
+        .header{background:linear-gradient(135deg,#5b21b6 0%,#7c3aed 50%,#5b21b6 100%);border-bottom:4px solid var(--purple);padding:1.25rem 2rem;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);z-index:10}
+        .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(255,255,255,0.05) 30px,rgba(255,255,255,0.05) 31px)}
+        .header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+        .logo-section{display:flex;align-items:center;gap:1rem}
+        .logo-icon{width:50px;height:50px;background:linear-gradient(135deg,var(--purple) 0%,#5b21b6 100%);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:3px solid rgba(255,255,255,0.3);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+        .logo-text h1{font-family:'Barlow',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:3px;color:white;text-shadow:0 2px 4px rgba(0,0,0,0.2)}
+        .logo-text p{font-size:0.85rem;color:rgba(255,255,255,0.85);margin-top:0.2rem}
+        .subtitle-bar{background:var(--bg-secondary);padding:0.75rem 2rem;text-align:center;position:relative;z-index:10}
+        .subtitle-text{font-family:'Barlow',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text-secondary);letter-spacing:2px;text-transform:uppercase}
+        .nav-tabs{display:flex;gap:0.5rem;justify-content:center;margin:0 auto;padding:1rem 2rem;background:var(--bg-secondary);border-bottom:1px solid var(--border-color);position:relative;z-index:10;flex-wrap:wrap}
+        .nav-tab{padding:0.75rem 1.5rem;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .3s;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-secondary);display:flex;align-items:center;gap:0.5rem}
+        .nav-tab:hover{border-color:var(--purple);color:var(--text-primary)}
+        .nav-tab.active{background:linear-gradient(135deg,var(--purple) 0%,#5b21b6 100%);color:white;border-color:transparent;box-shadow:0 4px 12px rgba(124,58,237,0.3)}
+        .nav-tab .tab-icon{font-size:1.1rem}
+        .container{max-width:1200px;margin:0 auto;padding:1.5rem 2rem 3rem;position:relative;z-index:10}
+        .page{display:none}.page.active{display:block}
+        .project-card{border-radius:12px;padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.25rem;border:1px solid rgba(255,255,255,0.15)}
+        .project-icon{width:50px;height:50px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+        .project-title{font-family:'Barlow',sans-serif;font-size:1.4rem;font-weight:800;color:white;letter-spacing:1px}
+        .project-subtitle{font-size:0.95rem;color:rgba(255,255,255,0.85);margin-top:0.25rem}
+        .budget-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;text-align:center;box-shadow:var(--shadow-sm)}
+        .budget-label{font-family:'Barlow',sans-serif;font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:2px;margin-bottom:0.5rem}
+        .budget-value{font-family:'Barlow',sans-serif;font-size:2.2rem;font-weight:800}
+        .budget-value.blue{color:var(--blue)}.budget-value.green{color:var(--green-primary)}.budget-value.purple{color:var(--purple)}
+        .budget-sub{font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem}
+        .equipment-section{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
+        .section-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color)}
+        .section-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+        .section-icon.blue{background:rgba(41,128,185,0.1)}.section-icon.orange{background:rgba(230,126,34,0.1)}.section-icon.purple{background:rgba(124,58,237,0.1)}.section-icon.green{background:rgba(26,122,62,0.1)}.section-icon.red{background:rgba(214,60,53,0.1)}.section-icon.yellow{background:rgba(201,164,12,0.1)}
+        .section-title{font-family:'Barlow',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:1px}
+        .section-total{margin-left:auto;font-family:'Barlow',sans-serif;font-size:1.1rem;font-weight:800;color:var(--green-primary)}
+        .equipment-list{display:flex;flex-direction:column;gap:0.6rem}
+        .equipment-item{display:flex;align-items:center;gap:1rem;padding:0.875rem 1rem;background:var(--bg-highlight);border-radius:8px;border-left:3px solid;transition:all .2s}
+        .equipment-item:hover{transform:translateX(4px)}
+        .equipment-item.confirmed{border-color:var(--green-primary)}
+        .equipment-item.optional{border-color:var(--yellow);opacity:0.8}
+        .item-status{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700}
+        .equipment-item.confirmed .item-status{background:var(--green-primary);color:white}
+        .equipment-item.optional .item-status{background:var(--yellow);color:white}
+        .item-details{flex:1}
+        .item-name{font-size:0.95rem;font-weight:600}
+        .item-specs{font-size:0.8rem;color:var(--text-secondary);margin-top:0.15rem}
+        .item-source{font-size:0.7rem;color:var(--text-muted);margin-top:0.15rem}
+        .item-price{font-family:'Barlow',sans-serif;font-size:0.95rem;font-weight:700;color:var(--green-primary);white-space:nowrap}
+        .equipment-item.optional .item-price{color:var(--yellow)}
+        .checklist-section{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
+        .checklist-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border-color)}
+        .checklist-progress-bar{height:8px;background:#b0b5bc;border-radius:4px;overflow:hidden;margin-top:0.75rem}
+        .checklist-progress-fill{height:100%;background:linear-gradient(90deg,#5b21b6 0%,#7c3aed 50%,#a78bfa 100%);border-radius:4px;transition:width .5s}
+        .checklist-group{background:var(--bg-highlight);border:1px solid var(--border-color);border-radius:10px;margin-bottom:0.75rem;overflow:hidden}
+        .group-header{display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;cursor:pointer;transition:background .2s}
+        .group-header:hover{background:#e4e7eb}
+        .group-number{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Barlow',sans-serif;font-size:0.9rem;font-weight:800;color:white}
+        .group-number.green{background:linear-gradient(135deg,var(--green-primary) 0%,var(--green-dark) 100%)}
+        .group-number.red{background:linear-gradient(135deg,var(--red-primary) 0%,var(--red-dark) 100%)}
+        .group-number.yellow{background:linear-gradient(135deg,var(--yellow) 0%,#a68a0a 100%)}
+        .group-number.purple{background:linear-gradient(135deg,var(--purple) 0%,#5b21b6 100%)}
+        .group-number.blue{background:linear-gradient(135deg,var(--blue) 0%,#1a6da0 100%)}
+        .group-info{flex:1}
+        .group-title{font-size:0.95rem;font-weight:700}
+        .group-subtitle{font-size:0.75rem;color:var(--text-muted);margin-top:0.15rem}
+        .group-progress{font-family:'Barlow',sans-serif;font-size:0.8rem;color:var(--text-secondary);padding:0.3rem 0.7rem;background:var(--bg-card);border-radius:5px;border:1px solid var(--border-color);font-weight:700}
+        .group-progress.done{color:#156d33;background:#e6f4ea;border-color:#81c784}
+        .group-toggle{font-size:0.8rem;color:var(--text-muted);transition:transform .3s}
+        .group-toggle.open{transform:rotate(180deg)}
+        .group-items{padding:0 1.25rem 1rem;display:none}
+        .checklist-item{display:flex;align-items:center;gap:0.75rem;padding:0.75rem;background:var(--bg-card);border-radius:6px;margin-bottom:0.4rem;cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+        .checklist-item:hover{border-left-color:var(--purple);transform:translateX(3px)}
+        .checklist-item.completed{opacity:0.5;border-left-color:var(--green-light);background:var(--green-bg)}
+        .checklist-item.completed .item-text{text-decoration:line-through;color:var(--text-muted)}
+        .checkbox{width:22px;height:22px;border:2px solid #8a8a8a;border-radius:5px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;background:white}
+        .checklist-item.completed .checkbox{background:var(--green-primary);border-color:var(--green-primary)}
+        .checkbox::after{content:'\2713';font-size:0.8rem;color:white;opacity:0;font-weight:bold}
+        .checklist-item.completed .checkbox::after{opacity:1}
+        .item-content{flex:1}
+        .item-text{font-size:0.85rem;font-weight:600}
+        .item-note{font-size:0.75rem;color:var(--text-secondary);margin-top:0.1rem}
+        .item-tag{font-size:0.65rem;padding:0.2rem 0.5rem;border-radius:4px;font-weight:600;white-space:nowrap}
+        .item-tag.setup{background:#ede7f6;color:#5b21b6;border:1px solid #d1c4e9}
+        .item-tag.marketing{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7}
+        .item-tag.gratis{background:#e3f2fd;color:#1565c0;border:1px solid #90caf9}
+        .item-tag.invest{background:#fff3e0;color:#e65100;border:1px solid #ffcc80}
+        .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+        .summary-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;text-align:center;box-shadow:var(--shadow-sm)}
+        .summary-card .card-icon{font-size:2rem;margin-bottom:0.5rem}
+        .summary-card .card-title{font-size:0.8rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem}
+        .summary-card .card-value{font-family:'Barlow',sans-serif;font-size:1.6rem;font-weight:800}
+        .info-box{background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+        .info-box .info-icon{font-size:1.3rem}
+        .info-box .info-text{font-size:0.9rem;color:var(--text-secondary)}
+        .s{background:var(--bg-card);border-radius:16px;padding:1.5rem 2rem;margin-bottom:1.5rem;box-shadow:var(--shadow-md);border:1px solid var(--border-color)}
+        .st{font-family:'Barlow',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text-primary);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+        .st .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
+        .note{background:var(--yellow-bg);padding:0.8rem 1.2rem;border-radius:10px;font-size:0.8rem;color:#856404;margin-top:1rem;border-left:4px solid var(--yellow)}
+        .highlight{background:rgba(124,58,237,0.08);border-left:4px solid var(--purple);padding:0.8rem 1.2rem;border-radius:0 10px 10px 0;margin-top:1rem;font-size:0.85rem}
+        .timeline{position:relative;padding-left:2rem;margin-top:1rem}
+        .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--purple),var(--blue),var(--green-primary))}
+        .timeline-item{position:relative;margin-bottom:1.5rem;padding:1rem;background:var(--bg-highlight);border-radius:10px;border-left:3px solid var(--purple)}
+        .timeline-item::before{content:'';position:absolute;left:-2.35rem;top:1rem;width:12px;height:12px;background:var(--purple);border-radius:50%;border:2px solid white;box-shadow:0 0 0 2px var(--purple)}
+        .timeline-phase{font-family:'Barlow',sans-serif;font-size:0.75rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px}
+        .timeline-title{font-size:1rem;font-weight:700;margin-top:0.25rem}
+        .timeline-desc{font-size:0.85rem;color:var(--text-secondary);margin-top:0.25rem}
+        .timeline-cost{font-family:'Barlow',sans-serif;font-size:0.9rem;font-weight:700;color:var(--green-primary);margin-top:0.5rem}
+        .cg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+        .cc{border:2px solid var(--border-color);border-radius:12px;padding:1rem;text-align:center;transition:all .3s}
+        .cc:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+        .cc h3{font-size:0.85rem;margin-bottom:0.5rem;font-family:'Barlow',sans-serif}
+        .cc .big{font-size:1.5rem;font-weight:700;color:var(--purple);font-family:'Barlow',sans-serif}
+        .cc .sm{font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem}
+        table{width:100%;border-collapse:collapse;table-layout:fixed}
+        th{background:var(--bg-secondary);padding:0.7rem;text-align:left;font-weight:600;font-size:0.78rem;color:var(--text-muted);border-bottom:2px solid var(--border-color);font-family:'Barlow',sans-serif;letter-spacing:0.5px;text-transform:uppercase}
+        td{padding:0.6rem;border-bottom:1px solid #eee;font-size:0.85rem}
+        tr:hover td{background:var(--bg-secondary)}
+        .vb{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;border-radius:25px;font-size:0.8rem;font-weight:700;color:#fff;font-family:'Barlow',sans-serif;letter-spacing:1px;text-transform:uppercase;box-shadow:0 3px 10px rgba(0,0,0,0.2)}
+        .badge-purple{background:linear-gradient(135deg,var(--purple) 0%,#5b21b6 100%)}
+        .badge-blue{background:linear-gradient(135deg,var(--blue) 0%,#1a6da0 100%)}
+        .badge-green{background:linear-gradient(135deg,var(--green-primary) 0%,var(--green-dark) 100%)}
+        @media(max-width:768px){.container{padding:0 1rem}.s,.equipment-section,.checklist-section{padding:1rem}th,td{padding:0.4rem;font-size:0.75rem}.cg,.summary-grid{grid-template-columns:1fr}.header-content{flex-direction:column;gap:0.75rem;text-align:center}.nav-tabs{flex-wrap:wrap}.timeline{padding-left:1.5rem}}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .animate{animation:fadeIn .4s ease forwards}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">&#128241;</div>
+                <div class="logo-text">
+                    <h1>PINHEIRO OTERO</h1>
+                    <p>Bom Jesus dos Perdões - SP</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="subtitle-bar">
+        <div class="subtitle-text">Posicionamento Online</div>
+    </div>
+
+    <nav class="nav-tabs">
+        <div class="nav-tab active" onclick="showPage('google')">
+            <span class="tab-icon">&#128205;</span>
+            <span>Google</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('redes')">
+            <span class="tab-icon">&#128247;</span>
+            <span>Redes Sociais</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('site')">
+            <span class="tab-icon">&#127760;</span>
+            <span>Site</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('anuncios')">
+            <span class="tab-icon">&#128227;</span>
+            <span>Anuncios</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('checklist')">
+            <span class="tab-icon">&#10003;</span>
+            <span>Checklist</span>
+        </div>
+        <div class="nav-tab" onclick="showPage('visao-geral')">
+            <span class="tab-icon">&#128202;</span>
+            <span>Visao Geral</span>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- ==================== GOOGLE MEU NEGOCIO ==================== -->
+        <div id="google" class="page active">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#2980b9 0%,#1a6da0 100%);box-shadow:0 4px 16px rgba(41,128,185,0.3)">
+                <div class="project-icon">&#128205;</div>
+                <div>
+                    <div class="project-title">Google Meu Negocio</div>
+                    <div class="project-subtitle">Perfil existente — 4.0 estrelas, 267 avaliacoes</div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon blue">&#128205;</div>
+                    <div class="section-title">STATUS ATUAL</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed">
+                        <div class="item-status">&#10003;</div>
+                        <div class="item-details">
+                            <div class="item-name">Posto Gasolina Pinheiro Otero</div>
+                            <div class="item-specs">Av. Manoel R. dos Santos, 310 | (11) 4012-7792 | Aberto 24h</div>
+                            <div class="item-source">google.com/maps</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--yellow);background:rgba(201,164,12,0.05)">
+                        <div class="item-status" style="background:var(--yellow)">&#9733;</div>
+                        <div class="item-details">
+                            <div class="item-name">4.0 Estrelas — 267 Avaliacoes</div>
+                            <div class="item-specs">Bom rating, mas pode melhorar com mais avaliacoes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon green">&#9989;</div>
+                    <div class="section-title">ACOES NECESSARIAS</div>
+                    <div class="section-total">5 tarefas</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128247;</div>
+                        <div class="item-details">
+                            <div class="item-name">Adicionar fotos profissionais</div>
+                            <div class="item-specs">Fachada, bombas, lava rapido, interior, equipe</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128221;</div>
+                        <div class="item-details">
+                            <div class="item-name">Atualizar descricao com servicos completos</div>
+                            <div class="item-specs">Incluir: lava rapida, troca de oleo, conveniencia (futuro)</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128204;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar QR Code para avaliacoes</div>
+                            <div class="item-specs">QR Code no caixa direcionando para avaliar no Google</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128221;</div>
+                        <div class="item-details">
+                            <div class="item-name">Adicionar servicos de Lava Rapido e Troca de Oleo</div>
+                            <div class="item-specs">Atualmente so mostra "Posto de combustivel" — adicionar categorias</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box animate">
+                <div class="info-icon">&#128161;</div>
+                <div class="info-text"><strong>Dica:</strong> Responda TODAS as avaliacoes (positivas e negativas). Isso melhora o ranking e mostra que se importa com o cliente. Meta: responder em ate 24h.</div>
+            </div>
+        </div>
+
+        <!-- ==================== REDES SOCIAIS ==================== -->
+        <div id="redes" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#e67e22 0%,#d35400 100%);box-shadow:0 4px 16px rgba(230,126,34,0.3)">
+                <div class="project-icon">&#128247;</div>
+                <div>
+                    <div class="project-title">Redes Sociais</div>
+                    <div class="project-subtitle">Instagram + Facebook + WhatsApp Business</div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon green">&#128247;</div>
+                    <div class="section-title">INSTAGRAM</div>
+                    <div class="section-total">6 tarefas</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128221;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar Perfil</div>
+                            <div class="item-specs">Bio atualizada, endereco, WhatsApp, servicos, horarios</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128205;</div>
+                        <div class="item-details">
+                            <div class="item-name">Link na Bio para o Maps do Posto</div>
+                            <div class="item-specs">Link direto para google.com/maps do posto</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#127912;</div>
+                        <div class="item-details">
+                            <div class="item-name">Definir identidade visual</div>
+                            <div class="item-specs">Logo, cores, tom de voz, padrao de posts</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128197;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar calendario de conteudo</div>
+                            <div class="item-specs">3 posts/semana: dicas, promocoes, bastidores, servicos</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128247;</div>
+                        <div class="item-details">
+                            <div class="item-name">Primeiro mes: 12 posts</div>
+                            <div class="item-specs">Garantir conteudo inicial antes de divulgar o perfil</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128100;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar Reels/Stories</div>
+                            <div class="item-specs">Conteudo dinamico: antes/depois, bastidores, dicas</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128200;</div>
+                        <div class="item-details">
+                            <div class="item-name">Definir hashtags estrategicas</div>
+                            <div class="item-specs">#BomJesusDosPerdões #LavaRapido #PostoPinheiroOtero</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon blue">&#128100;</div>
+                    <div class="section-title">FACEBOOK</div>
+                    <div class="section-total">3 tarefas</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128221;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar Pagina</div>
+                            <div class="item-specs">Pagina do posto com informacoes completas e atualizadas</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128101;</div>
+                        <div class="item-details">
+                            <div class="item-name">Configurar Messenger</div>
+                            <div class="item-specs">Respostas automaticas, horarios, link WhatsApp</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">&#128203;</div>
+                        <div class="item-details">
+                            <div class="item-name">Reaproveitar conteudo do Instagram</div>
+                            <div class="item-specs">Mesmos posts, adaptar para formato Facebook</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon green">&#128172;</div>
+                    <div class="section-title">WHATSAPP BUSINESS</div>
+                    <div class="section-total">4 tarefas</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed" style="border-color:var(--green-primary);background:rgba(33,150,83,0.05)">
+                        <div class="item-status" style="background:var(--green-primary)">&#128221;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar conta WhatsApp Business</div>
+                            <div class="item-specs">Catalogo de servicos, respostas rapidas, horarios, logo</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--green-primary);background:rgba(33,150,83,0.05)">
+                        <div class="item-status" style="background:var(--green-primary)">&#128203;</div>
+                        <div class="item-details">
+                            <div class="item-name">Configurar catalogo de servicos</div>
+                            <div class="item-specs">Ducha Simples, Ducha com Cera, Troca de Oleo — precos</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--green-primary);background:rgba(33,150,83,0.05)">
+                        <div class="item-status" style="background:var(--green-primary)">&#128172;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar respostas rapidas</div>
+                            <div class="item-specs">Horarios, localizacao, precos, menu de servicos</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--green-primary);background:rgba(33,150,83,0.05)">
+                        <div class="item-status" style="background:var(--green-primary)">&#128279;</div>
+                        <div class="item-details">
+                            <div class="item-name">Gerar link direto para WhatsApp</div>
+                            <div class="item-specs">wa.me/551140127792 — usar em todas as redes e site</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note animate">
+                <strong>Estrategia de conteudo:</strong> 40% dicas e cuidados com o carro, 30% promocoes e servicos, 20% bastidores e equipe, 10% interacao (enquetes, perguntas). Foco em videos curtos (Reels/Stories).
+            </div>
+        </div>
+
+        <!-- ==================== SITE INSTITUCIONAL ==================== -->
+        <div id="site" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#27ae60 0%,#1e8449 100%);box-shadow:0 4px 16px rgba(39,174,96,0.3)">
+                <div class="project-icon">&#127760;</div>
+                <div>
+                    <div class="project-title">Site Institucional</div>
+                    <div class="project-subtitle">One-page WordPress — Hostinger</div>
+                </div>
+            </div>
+
+            <div class="budget-card animate">
+                <div class="budget-label">Custo Estimado</div>
+                <div class="budget-value green">~R$ 80/ano + R$ 15-30/mes</div>
+                <div class="budget-sub">Dominio + Hospedagem WordPress</div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon green">&#127760;</div>
+                    <div class="section-title">O QUE O SITE DEVE TER</div>
+                    <div class="section-total">5 secoes</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed">
+                        <div class="item-status">&#127970;</div>
+                        <div class="item-details">
+                            <div class="item-name">Cabecalho com logo e WhatsApp</div>
+                            <div class="item-specs">Botao flutuante "Fale Conosco" direcionando ao WhatsApp</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed">
+                        <div class="item-status">&#128736;</div>
+                        <div class="item-details">
+                            <div class="item-name">Servicos com precos</div>
+                            <div class="item-specs">Lava Rapida, Ducha com Cera, Troca de Oleo — tabelas visuais</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed">
+                        <div class="item-status">&#128205;</div>
+                        <div class="item-details">
+                            <div class="item-name">Localizacao com mapa</div>
+                            <div class="item-specs">Google Maps embutido, endereco, referencia, como chegar</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed">
+                        <div class="item-status">&#128222;</div>
+                        <div class="item-details">
+                            <div class="item-name">Contato e horarios</div>
+                            <div class="item-specs">Telefone, WhatsApp, horario de funcionamento, redes sociais</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed">
+                        <div class="item-status">&#128214;</div>
+                        <div class="item-details">
+                            <div class="item-name">Sobre nos</div>
+                            <div class="item-specs">Historia do posto, diferenciais, missao, fotos da equipe</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon blue">&#128196;</div>
+                    <div class="section-title">PASSO A PASSO</div>
+                    <div class="section-total">5 etapas</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">1</div>
+                        <div class="item-details">
+                            <div class="item-name">Registrar dominio na Hostinger</div>
+                            <div class="item-specs">postopinheirootero.com.br ou similar (~R$ 40-80/ano)</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">2</div>
+                        <div class="item-details">
+                            <div class="item-name">Contratar hospedagem WordPress</div>
+                            <div class="item-specs">Plano WordPress (~R$ 15-30/mes), painel cPanel</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">3</div>
+                        <div class="item-details">
+                            <div class="item-name">Instalar WordPress e tema</div>
+                            <div class="item-specs">Tema responsivo gratuito ou premium basico</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">4</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar paginas e conteudo</div>
+                            <div class="item-specs">Texto, fotos, precos, mapa, WhatsApp, formulario</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--blue);background:rgba(41,128,185,0.05)">
+                        <div class="item-status" style="background:var(--blue)">5</div>
+                        <div class="item-details">
+                            <div class="item-name">Configurar SEO basico</div>
+                            <div class="item-specs">Title tags, meta descriptions, Google Search Console</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note animate">
+                <strong>Por que WordPress?</strong> Facil de gerenciar, milhares de temas, plugins de SEO e WhatsApp prontos, custo baixo. Nao precisa de programador para atualizacoes simples.
+            </div>
+        </div>
+
+        <!-- ==================== ANUNCIOS ONLINE ==================== -->
+        <div id="anuncios" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#c0392b 0%,#96281b 100%);box-shadow:0 4px 16px rgba(192,57,43,0.3)">
+                <div class="project-icon">&#128227;</div>
+                <div>
+                    <div class="project-title">Anuncios Online</div>
+                    <div class="project-subtitle">Waze + Meta Ads — Foco local, baixo custo</div>
+                </div>
+            </div>
+
+            <div class="budget-card animate">
+                <div class="budget-label">Investimento Mensal</div>
+                <div class="budget-value purple">R$ 150-300/mes</div>
+                <div class="budget-sub">Meta Ads (principal) + Waze (complementar)</div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon green">&#128663;</div>
+                    <div class="section-title">WAZE — PRIORIDADE</div>
+                    <div class="section-total" style="color:var(--green-primary)">Gratuito/Baixo Custo</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed" style="border-color:var(--green-primary);background:rgba(33,150,83,0.05)">
+                        <div class="item-status" style="background:var(--green-primary)">&#10003;</div>
+                        <div class="item-details">
+                            <div class="item-name">Cadastrar negocio no Waze</div>
+                            <div class="item-specs">Adicionar posto para motoristas encontrarem pelo app</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--green-primary);background:rgba(33,150,83,0.05)">
+                        <div class="item-status" style="background:var(--green-primary)">&#10003;</div>
+                        <div class="item-details">
+                            <div class="item-name">Waze Ads (opcional)</div>
+                            <div class="item-specs">Anuncio local quando motoristas estao proximos — custo baixo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon blue">&#128247;</div>
+                    <div class="section-title">META ADS — PRINCIPAL</div>
+                    <div class="section-total" style="color:var(--purple)">R$ 150-300/mes</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item confirmed" style="border-color:var(--purple);background:rgba(124,58,237,0.05)">
+                        <div class="item-status" style="background:var(--purple)">&#128196;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar conta Meta Business</div>
+                            <div class="item-specs">Gerenciar anuncios Instagram + Facebook em um so lugar</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--purple);background:rgba(124,58,237,0.05)">
+                        <div class="item-status" style="background:var(--purple)">&#127919;</div>
+                        <div class="item-details">
+                            <div class="item-name">Definir publico-alvo</div>
+                            <div class="item-specs">Pessoas que moram em Bom Jesus dos Perdões e que passam por lá também, 25-55 anos, que dirigem, têm interesse em carros</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--purple);background:rgba(124,58,237,0.05)">
+                        <div class="item-status" style="background:var(--purple)">&#127909;</div>
+                        <div class="item-details">
+                            <div class="item-name">Criar campanhas</div>
+                            <div class="item-specs">Foco em servicos (lava rapido + troca de oleo), promocoes</div>
+                        </div>
+                    </div>
+                    <div class="equipment-item confirmed" style="border-color:var(--purple);background:rgba(124,58,237,0.05)">
+                        <div class="item-status" style="background:var(--purple)">&#128176;</div>
+                        <div class="item-details">
+                            <div class="item-name">Orcamento mensal</div>
+                            <div class="item-specs">R$ 5-10/dia, foco em alcance local, conversao via WhatsApp ou Google Maps</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-section animate">
+                <div class="section-header">
+                    <div class="section-icon red">&#128200;</div>
+                    <div class="section-title">GOOGLE ADS — ADIADO</div>
+                    <div class="section-total" style="color:var(--yellow)">Futuro</div>
+                </div>
+                <div class="equipment-list">
+                    <div class="equipment-item optional">
+                        <div class="item-status">~</div>
+                        <div class="item-details">
+                            <div class="item-name">Google Ads (Search + Maps)</div>
+                            <div class="item-specs">Adiado — foco primeiro em Waze + Meta. Considerar quando faturamento crescer.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s animate">
+                <div class="st"><div class="icon" style="background:rgba(124,58,237,0.1)">&#128200;</div> Metricas para Acompanhar</div>
+                <div class="cg">
+                    <div class="cc" style="border-color:var(--purple)"><h3>Alcance</h3><div class="big">Local</div><div class="sm">Pessoas dentro de 5km</div></div>
+                    <div class="cc" style="border-color:var(--blue)"><h3>Cliques</h3><div class="big" style="color:var(--blue)">WhatsApp</div><div class="sm">Conversao principal</div></div>
+                    <div class="cc" style="border-color:var(--green-primary)"><h3>Custo</h3><div class="big" style="color:var(--green-primary)">R$ 150-300</div><div class="sm">investimento mensal</div></div>
+                </div>
+            </div>
+
+            <div class="note animate">
+                <strong>Regra de ouro:</strong> Nao gaste em anuncios ate ter: (1) Google Meu Negocio otimizado, (2) redes sociais com conteudo, (3) WhatsApp Business funcionando. Primeiro organizar, depois divulgar.
+            </div>
+        </div>
+
+        <!-- ==================== CHECKLIST ==================== -->
+        <div id="checklist" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#5b21b6 0%,#7c3aed 100%);box-shadow:0 4px 16px rgba(124,58,237,0.3)">
+                <div class="project-icon">&#10003;</div>
+                <div>
+                    <div class="project-title">Checklist Completo</div>
+                    <div class="project-subtitle">23 tarefas em 5 grupos — Acompanhamento do progresso</div>
+                </div>
+            </div>
+
+            <div class="checklist-section animate">
+                <div class="checklist-header">
+                    <div class="section-icon purple">&#10003;</div>
+                    <div class="section-title">CHECKLIST DE IMPLANTACAO</div>
+                    <div class="section-total" id="progress-count">0/23</div>
+                </div>
+                <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="progress-fill" style="width:0%"></div></div>
+                <div style="margin-top:1rem">
+                    <!-- Grupo 1 -->
+                    <div class="checklist-group">
+                        <div class="group-header" onclick="toggleGroup(this)">
+                            <div class="group-number blue">1</div>
+                            <div class="group-info">
+                                <div class="group-title">Google Meu Negocio</div>
+                                <div class="group-subtitle">Perfil Google — 4 tarefas</div>
+                            </div>
+                            <div class="group-progress" data-group="1">0/4</div>
+                            <div class="group-toggle">&#9660;</div>
+                        </div>
+                        <div class="group-items" data-group="1">
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Adicionar fotos profissionais</div>
+                                    <div class="item-note">Fachada, bombas, lava rapido, interior, equipe</div>
+                                </div>
+                                <span class="item-tag marketing">Marketing</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Atualizar descricao com servicos completos</div>
+                                    <div class="item-note">Incluir: lava rapida, troca de oleo, conveniencia</div>
+                                </div>
+                                <span class="item-tag setup">Atualizacao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar QR Code para avaliacoes</div>
+                                    <div class="item-note">QR Code no caixa direcionando para avaliar</div>
+                                </div>
+                                <span class="item-tag marketing">Marketing</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Adicionar servicos de Lava Rapido e Troca de Oleo</div>
+                                    <div class="item-note">Atualmente so mostra "Posto de combustivel"</div>
+                                </div>
+                                <span class="item-tag setup">Atualizacao</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Grupo 2 -->
+                    <div class="checklist-group">
+                        <div class="group-header" onclick="toggleGroup(this)">
+                            <div class="group-number orange">2</div>
+                            <div class="group-info">
+                                <div class="group-title">Redes Sociais</div>
+                                <div class="group-subtitle">Instagram + Facebook + WhatsApp — 10 tarefas</div>
+                            </div>
+                            <div class="group-progress" data-group="2">0/10</div>
+                            <div class="group-toggle">&#9660;</div>
+                        </div>
+                        <div class="group-items" data-group="2">
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar perfil no Instagram</div>
+                                    <div class="item-note">Bio, endereco, WhatsApp, servicos, horarios</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Link na Bio para o Maps do Posto</div>
+                                    <div class="item-note">Link direto para google.com/maps do posto</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar pagina no Facebook</div>
+                                    <div class="item-note">Pagina do posto com informacoes completas</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar WhatsApp Business</div>
+                                    <div class="item-note">Catalogo, respostas rapidas, horarios, logo</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Definir identidade visual nas redes</div>
+                                    <div class="item-note">Logo, cores, tom de voz, padrao de posts</div>
+                                </div>
+                                <span class="item-tag marketing">Marketing</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar calendario de conteudo</div>
+                                    <div class="item-note">3 posts/semana: dicas, promocoes, bastidores</div>
+                                </div>
+                                <span class="item-tag marketing">Marketing</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Produzir 12 posts iniciais</div>
+                                    <div class="item-note">Garantir conteudo antes de divulgar o perfil</div>
+                                </div>
+                                <span class="item-tag marketing">Marketing</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar Reels/Stories</div>
+                                    <div class="item-note">Antes/depois, bastidores, dicas rapidas</div>
+                                </div>
+                                <span class="item-tag marketing">Marketing</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Definir hashtags estrategicas</div>
+                                    <div class="item-note">#BomJesusDosPerdões #LavaRapido #PostoPinheiroOtero</div>
+                                </div>
+                                <span class="item-tag marketing">Marketing</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Gerar link wa.me para todas as redes</div>
+                                    <div class="item-note">wa.me/551140127792 — usar em bio e site</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Grupo 3 -->
+                    <div class="checklist-group">
+                        <div class="group-header" onclick="toggleGroup(this)">
+                            <div class="group-number green">3</div>
+                            <div class="group-info">
+                                <div class="group-title">Site Institucional</div>
+                                <div class="group-subtitle">WordPress + Hostinger — 5 tarefas</div>
+                            </div>
+                            <div class="group-progress" data-group="3">0/5</div>
+                            <div class="group-toggle">&#9660;</div>
+                        </div>
+                        <div class="group-items" data-group="3">
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Registrar dominio na Hostinger</div>
+                                    <div class="item-note">postopinheirootero.com.br (~R$ 40-80/ano)</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Contratar hospedagem WordPress</div>
+                                    <div class="item-note">Plano basico (~R$ 15-30/mes)</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Instalar WordPress e tema</div>
+                                    <div class="item-note">Tema responsivo gratuito ou premium</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar paginas e conteudo</div>
+                                    <div class="item-note">Servicos, precos, localizacao, WhatsApp, sobre</div>
+                                </div>
+                                <span class="item-tag marketing">Conteudo</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Configurar SEO basico</div>
+                                    <div class="item-note">Title tags, meta descriptions, Google Search Console</div>
+                                </div>
+                                <span class="item-tag marketing">SEO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Grupo 4 -->
+                    <div class="checklist-group">
+                        <div class="group-header" onclick="toggleGroup(this)">
+                            <div class="group-number purple">4</div>
+                            <div class="group-info">
+                                <div class="group-title">Anuncios Online</div>
+                                <div class="group-subtitle">Waze + Meta Ads — 3 tarefas</div>
+                            </div>
+                            <div class="group-progress" data-group="4">0/3</div>
+                            <div class="group-toggle">&#9660;</div>
+                        </div>
+                        <div class="group-items" data-group="4">
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Cadastrar no Waze</div>
+                                    <div class="item-note">Adicionar negocio para motoristas encontrarem</div>
+                                </div>
+                                <span class="item-tag gratis">Gratuito</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Criar conta Meta Business</div>
+                                    <div class="item-note">Gerenciar anuncios Instagram + Facebook</div>
+                                </div>
+                                <span class="item-tag setup">Configuracao</span>
+                            </div>
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Lancar primeira campanha Meta Ads</div>
+                                    <div class="item-note">R$ 5-10/dia, publico local, conversao WhatsApp</div>
+                                </div>
+                                <span class="item-tag invest">Investimento</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Grupo 5 -->
+                    <div class="checklist-group">
+                        <div class="group-header" onclick="toggleGroup(this)">
+                            <div class="group-number red">5</div>
+                            <div class="group-info">
+                                <div class="group-title">Acompanhamento</div>
+                                <div class="group-subtitle">Metricas e ajustes — 1 tarefa</div>
+                            </div>
+                            <div class="group-progress" data-group="5">0/1</div>
+                            <div class="group-toggle">&#9660;</div>
+                        </div>
+                        <div class="group-items" data-group="5">
+                            <div class="checklist-item" onclick="toggleCheck(this)">
+                                <div class="checkbox"></div>
+                                <div class="item-content">
+                                    <div class="item-text">Revisar metricas mensalmente</div>
+                                    <div class="item-note">Alcance, cliques, conversoes, ROI, avaliacoes</div>
+                                </div>
+                                <span class="item-tag marketing">Analise</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="budget-card animate" style="margin-top:1.5rem">
+                <div class="budget-label">Investimento Mensal Estimado</div>
+                <div class="budget-value purple">R$ 150-300/mes</div>
+                <div class="budget-sub">Meta Ads (principal) + Dominio + Ferramentas</div>
+            </div>
+        </div>
+
+        <!-- ==================== VISAO GERAL ==================== -->
+        <div id="visao-geral" class="page">
+            <div class="project-card animate" style="background:linear-gradient(135deg,#5b21b6 0%,#7c3aed 50%,#5b21b6 100%);box-shadow:0 4px 16px rgba(124,58,237,0.3)">
+                <div class="project-icon">&#128241;</div>
+                <div>
+                    <div class="project-title">Posicionamento Online</div>
+                    <div class="project-subtitle">Estrategia digital completa — Posto Pinheiro Otero</div>
+                </div>
+            </div>
+
+            <div class="budget-card animate">
+                <div class="budget-label">Investimento Mensal Estimado</div>
+                <div class="budget-value purple">R$ 150-300/mes</div>
+                <div class="budget-sub">Meta Ads + Dominio + Ferramentas basicas</div>
+            </div>
+
+            <div class="summary-grid animate">
+                <div class="summary-card">
+                    <div class="card-icon">&#128205;</div>
+                    <div class="card-title">Google Meu Negocio</div>
+                    <div class="card-value" style="color:var(--blue)">4.0 &#11088;</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">267 avaliacoes — ja existe</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">&#128247;</div>
+                    <div class="card-title">Redes Sociais</div>
+                    <div class="card-value" style="color:var(--yellow)">Inativas</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">Instagram + Facebook + WhatsApp</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">&#127760;</div>
+                    <div class="card-title">Site Institucional</div>
+                    <div class="card-value" style="color:var(--green-primary)">Simples</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">One-page WordPress</div>
+                </div>
+            </div>
+
+            <div class="summary-grid animate">
+                <div class="summary-card">
+                    <div class="card-icon">&#128227;</div>
+                    <div class="card-title">Anuncios</div>
+                    <div class="card-value" style="color:var(--purple)">A Definir</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">Waze + Meta Ads local</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">&#128176;</div>
+                    <div class="card-title">Custo Dominio</div>
+                    <div class="card-value" style="color:var(--blue)">~R$ 80/ano</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">Hostinger</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">&#10003;</div>
+                    <div class="card-title">Total de Tarefas</div>
+                    <div class="card-value" style="color:var(--green-primary)">23</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">em 5 grupos</div>
+                </div>
+            </div>
+
+            <div class="s animate">
+                <div class="st"><div class="icon" style="background:rgba(124,58,237,0.1)">&#128197;</div> Fases de Implementacao</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Fase 1 — Imediato</div>
+                        <div class="timeline-title">Google Meu Negocio</div>
+                        <div class="timeline-desc">Atualizar perfil, adicionar servicos de lava rapido e troca de oleo, fotos profissionais, responder avaliacoes</div>
+                        <div class="timeline-cost">Custo: Gratuito</div>
+                    </div>
+                    <div class="timeline-item" style="border-left-color:var(--blue)">
+                        <div class="timeline-phase" style="color:var(--blue)">Fase 2 — Mes 1-2</div>
+                        <div class="timeline-title">Redes Sociais + WhatsApp Business</div>
+                        <div class="timeline-desc">Criar Instagram e Facebook, criar WhatsApp Business com catalogo, calendario de conteudo (3x/semana)</div>
+                        <div class="timeline-cost">Custo: Gratuito</div>
+                    </div>
+                    <div class="timeline-item" style="border-left-color:var(--green-primary)">
+                        <div class="timeline-phase" style="color:var(--green-primary)">Fase 3 — Mes 2-3</div>
+                        <div class="timeline-title">Site Institucional</div>
+                        <div class="timeline-desc">One-page WordPress na Hostinger, servicos, precos, localizacao, WhatsApp integrado, SEO local</div>
+                        <div class="timeline-cost">Custo: ~R$ 80/ano dominio + ~R$ 15-30/mes hospedagem</div>
+                    </div>
+                    <div class="timeline-item" style="border-left-color:var(--yellow)">
+                        <div class="timeline-phase" style="color:var(--yellow)">Fase 4 — Mes 3+</div>
+                        <div class="timeline-title">Anuncios Online</div>
+                        <div class="timeline-desc">Waze Ads (prioridade), Meta Ads local (R$ 150-300/mes), publico: motoristas em Bom Jesus dos Perdões</div>
+                        <div class="timeline-cost">Custo: R$ 150-300/mes</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box animate">
+                <div class="info-icon">&#128161;</div>
+                <div class="info-text"><strong>Estrategia:</strong> Comece pelo Google (ja existe e e gratuito), depois redes sociais (crie conteudo antes de divulgar), site por ultimo (so apos ter conteudo para mostrar). Anuncios so quando tudo estiver funcionando.</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showPage(pageId){
+            document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+            document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});
+            document.getElementById(pageId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        function toggleGroup(header){
+            var items=header.nextElementSibling;
+            var toggle=header.querySelector('.group-toggle');
+            var isOpen=items.style.display!=='none';
+            items.style.display=isOpen?'none':'block';
+            toggle.classList.toggle('open',!isOpen);
+        }
+        function toggleCheck(item){
+            item.classList.toggle('completed');
+            updateProgress();
+            saveProgress();
+        }
+        function updateProgress(){
+            var allItems=document.querySelectorAll('.checklist-item');
+            var completedItems=document.querySelectorAll('.checklist-item.completed');
+            var total=allItems.length;
+            var completed=completedItems.length;
+            var percentage=Math.round((completed/total)*100);
+            document.getElementById('progress-count').textContent=completed+'/'+total;
+            document.getElementById('progress-fill').style.width=percentage+'%';
+            [1,2,3,4,5].forEach(function(groupNum){
+                var groupItems=document.querySelectorAll('.group-items[data-group="'+groupNum+'"] .checklist-item');
+                var groupCompleted=document.querySelectorAll('.group-items[data-group="'+groupNum+'"] .checklist-item.completed');
+                var progressEl=document.querySelector('.group-progress[data-group="'+groupNum+'"]');
+                if(progressEl){
+                    progressEl.textContent=groupCompleted.length+'/'+groupItems.length;
+                    progressEl.classList.toggle('done',groupCompleted.length===groupItems.length);
+                }
+            });
+        }
+        function saveProgress(){
+            var items=document.querySelectorAll('.checklist-item');
+            var progress=Array.from(items).map(function(item){return item.classList.contains('completed')});
+            localStorage.setItem('posicionamento-online-checklist',JSON.stringify(progress));
+        }
+        function loadProgress(){
+            var saved=localStorage.getItem('posicionamento-online-checklist');
+            if(saved){
+                var progress=JSON.parse(saved);
+                var items=document.querySelectorAll('.checklist-item');
+                items.forEach(function(item,index){if(progress[index])item.classList.add('completed')});
+                updateProgress();
+            }
+        }
+        document.addEventListener('DOMContentLoaded',loadProgress);
+    </script>
+</body>
+</html>
